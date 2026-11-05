@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://iedc-idea-sprint.vercel.app/sitemap.xml

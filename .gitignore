@@ -31,3 +31,5 @@ Thumbs.db
 
 # Local test & audit outputs
 lighthouse-report*.json
+
+.vercel

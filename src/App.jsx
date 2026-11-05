@@ -6,6 +6,7 @@ import Hero from './components/Hero';
 import BrandStrip from './components/BrandStrip';
 import IdeaTicker from './components/IdeaTicker';
 import Footer from './components/Footer';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const About = lazy(() => import('./components/About'));
 const Pillars = lazy(() => import('./components/Pillars'));
@@ -17,9 +18,19 @@ const Registration = lazy(() => import('./components/Registration'));
 
 function SectionLoader() {
   return (
-    <div className="flex items-center justify-center py-20">
+    <div className="flex items-center justify-center py-20" aria-hidden="true">
       <div className="h-6 w-6 animate-spin rounded-full border-2 border-neutral-300 border-t-charcoal" />
     </div>
+  );
+}
+
+function LazySection({ children }) {
+  return (
+    <ErrorBoundary>
+      <Suspense fallback={<SectionLoader />}>
+        {children}
+      </Suspense>
+    </ErrorBoundary>
   );
 }
 
@@ -30,8 +41,16 @@ export default function App() {
   return (
     <MotionConfig reducedMotion="user">
       <div className="min-h-screen bg-offwhite text-charcoal">
+        {/* Skip to content — accessibility */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-charcoal focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-offwhite focus:shadow-lg"
+        >
+          Skip to main content
+        </a>
+
         {isRegistrationPage ? (
-          <main>
+          <main id="main-content">
             <div className="mx-auto max-w-7xl px-4 pt-6 sm:px-6 lg:px-8">
               <a
                 href="/"
@@ -41,25 +60,35 @@ export default function App() {
                 Back to Home
               </a>
             </div>
-            <Suspense fallback={<SectionLoader />}>
+            <LazySection>
               <Registration />
-            </Suspense>
+            </LazySection>
           </main>
         ) : (
           <>
             <Navbar />
-            <main>
+            <main id="main-content">
               <Hero />
               <BrandStrip />
-              <Suspense fallback={<SectionLoader />}>
+              <LazySection>
                 <About />
+              </LazySection>
+              <LazySection>
                 <Pillars />
+              </LazySection>
+              <LazySection>
                 <EventJourney />
+              </LazySection>
+              <LazySection>
                 <Schedule />
-                <IdeaTicker />
+              </LazySection>
+              <IdeaTicker />
+              <LazySection>
                 <TeamFinder />
+              </LazySection>
+              <LazySection>
                 <AboutIEDC />
-              </Suspense>
+              </LazySection>
             </main>
             <Footer />
           </>

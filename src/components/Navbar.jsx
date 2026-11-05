@@ -80,7 +80,12 @@ export default function Navbar() {
         <div className="flex h-16 items-center justify-between">
           {/* Left: Branding */}
           <div className="flex items-center gap-3">
-            <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: getScrollBehavior() }); }} className="font-heading text-sm font-bold tracking-tight sm:text-base">
+            <a
+              href="/"
+              aria-label="IEDC BOOTCAMP CEC — return to homepage"
+              onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: getScrollBehavior() }); }}
+              className="font-heading text-sm font-bold tracking-tight sm:text-base"
+            >
               IEDC BOOTCAMP CEC
             </a>
             <span className="hidden h-4 w-px bg-neutral-300 md:block" aria-hidden="true" />

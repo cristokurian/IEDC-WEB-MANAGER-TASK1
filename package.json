@@ -8,7 +8,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "gen:og": "node scripts/gen-og-image.mjs"
   },
   "dependencies": {
     "framer-motion": "^11.15.0",
@@ -18,6 +19,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@resvg/resvg-js": "^2.6.2",
     "@tailwindcss/vite": "^4.1.7",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",

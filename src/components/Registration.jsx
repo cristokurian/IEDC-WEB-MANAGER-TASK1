@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { AlertCircle, CheckCircle, RotateCcw } from 'lucide-react';
+import { AlertCircle, CheckCircle, RotateCcw, Loader2 } from 'lucide-react';
 import { REGISTRATION_FIELDS, validateForm } from '../utils/validation';
 
 const initialValues = Object.fromEntries(
@@ -12,6 +12,7 @@ export default function Registration() {
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validateField = useCallback((name, value) => {
     const field = REGISTRATION_FIELDS.find((f) => f.name === name);
@@ -45,7 +46,12 @@ export default function Registration() {
     setErrors(formErrors);
 
     if (isValid) {
-      setIsSubmitted(true);
+      setIsSubmitting(true);
+      // Simulate a brief async submission (frontend-only)
+      setTimeout(() => {
+        setIsSubmitting(false);
+        setIsSubmitted(true);
+      }, 600);
     }
   };
 
@@ -152,6 +158,8 @@ export default function Registration() {
 
   return (
     <section id="register" className="border-t border-neutral-200">
+      {/* Visually hidden H1 for the /register page — accessibility & SEO */}
+      <h1 className="sr-only">Register for IEDC IDEA SPRINT 2026</h1>
       <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
         <div className="lg:grid lg:grid-cols-5 lg:gap-16">
           <div className="lg:col-span-2 lg:sticky lg:top-24 lg:self-start">
@@ -191,9 +199,18 @@ export default function Registration() {
 
                   <button
                     type="submit"
-                    className="mt-2 w-full rounded-full bg-charcoal py-3.5 text-sm font-medium text-offwhite transition-all duration-200 hover:bg-neutral-700"
+                    disabled={isSubmitting}
+                    aria-busy={isSubmitting}
+                    className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-full bg-charcoal py-3.5 text-sm font-medium text-offwhite transition-all duration-200 hover:bg-neutral-700 disabled:cursor-not-allowed disabled:opacity-70"
                   >
-                    Secure Your Spot
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 size={16} className="animate-spin" aria-hidden="true" />
+                        Submitting…
+                      </>
+                    ) : (
+                      'Secure Your Spot'
+                    )}
                   </button>
                 </motion.form>
               ) : (
