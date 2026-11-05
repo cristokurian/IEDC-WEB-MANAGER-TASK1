@@ -1,0 +1,183 @@
+@import "tailwindcss";
+
+/* Custom design tokens */
+@theme {
+  --color-offwhite: #F7F7F2;
+  --color-charcoal: #171717;
+  --color-accent: #2563EB;
+  --color-accent-light: #3B82F6;
+  --color-accent-dark: #1D4ED8;
+
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-charcoal);
+  background-color: var(--color-offwhite);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+/* Focus styles */
+*:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.interactive-surface {
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease,
+    translate 200ms ease,
+    scale 200ms ease;
+}
+
+.interactive-surface.is-selected {
+  border-color: var(--color-accent);
+  background-color: color-mix(in srgb, var(--color-accent) 7%, white);
+  box-shadow: 0 8px 20px -16px rgb(37 99 235 / 70%);
+}
+
+.interactive-surface--dark.is-selected {
+  background-color: color-mix(in srgb, var(--color-accent) 14%, var(--color-charcoal));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .interactive-surface:not(.is-selected):hover {
+    translate: 0 -2px;
+    border-color: color-mix(in srgb, var(--color-accent) 55%, #d4d4d4);
+    background-color: color-mix(in srgb, var(--color-accent) 6%, white);
+    box-shadow: 0 12px 24px -18px rgb(37 99 235 / 75%);
+  }
+
+  .interactive-surface--dark:not(.is-selected):hover {
+    background-color: color-mix(in srgb, var(--color-accent) 14%, var(--color-charcoal));
+  }
+}
+
+.interactive-surface:active {
+  translate: 0 0;
+  scale: 0.995;
+  border-color: var(--color-accent);
+  background-color: color-mix(in srgb, var(--color-accent) 9%, white);
+}
+
+.interactive-surface.is-selected:active {
+  border-color: var(--color-accent);
+  background-color: color-mix(in srgb, var(--color-accent) 7%, white);
+}
+
+.interactive-surface--dark:active {
+  background-color: color-mix(in srgb, var(--color-accent) 17%, var(--color-charcoal));
+}
+
+.choice-chip {
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.peer:checked + .choice-chip {
+  border-color: var(--color-charcoal);
+  background-color: var(--color-charcoal);
+  color: var(--color-offwhite);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .peer:not(:checked) + .choice-chip:hover {
+    border-color: color-mix(in srgb, var(--color-accent) 55%, #d4d4d4);
+    background-color: color-mix(in srgb, var(--color-accent) 6%, white);
+    box-shadow: 0 8px 18px -16px rgb(37 99 235 / 75%);
+  }
+}
+
+.peer:not(:checked) + .choice-chip:active {
+  border-color: var(--color-accent);
+  background-color: color-mix(in srgb, var(--color-accent) 9%, white);
+}
+
+/* Selection */
+::selection {
+  background-color: var(--color-accent);
+  color: white;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-neutral-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-neutral-400);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-neutral-500);
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: idea-ticker-scroll 30s linear infinite;
+  will-change: transform;
+}
+
+@keyframes idea-ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none !important;
+    transform: translateX(0) !important;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .ticker-copy + .ticker-copy {
+    display: none;
+  }
+
+  .ticker-copy:first-child {
+    flex-wrap: wrap;
+    justify-content: center;
+    white-space: normal;
+  }
+}
