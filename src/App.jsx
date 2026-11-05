@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { MotionConfig } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import Navbar from './components/Navbar';
@@ -37,6 +37,21 @@ function LazySection({ children }) {
 export default function App() {
   const isRegistrationPage =
     window.location.pathname.replace(/\/+$/, '') === '/register';
+
+  useEffect(() => {
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (isRegistrationPage) {
+      document.title = 'Register | IEDC IDEA SPRINT 2026';
+      if (canonical) {
+        canonical.setAttribute('href', 'https://iedc-idea-sprint.vercel.app/register');
+      }
+    } else {
+      document.title = 'IEDC IDEA SPRINT 2026 | IEDC BOOTCAMP CEC';
+      if (canonical) {
+        canonical.setAttribute('href', 'https://iedc-idea-sprint.vercel.app/');
+      }
+    }
+  }, [isRegistrationPage]);
 
   return (
     <MotionConfig reducedMotion="user">

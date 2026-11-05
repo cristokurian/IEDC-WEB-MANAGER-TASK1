@@ -6,7 +6,7 @@
   "description": "IEDC IDEA SPRINT 2026 — A 24-hour student ideathon event microsite by IEDC BOOTCAMP CEC",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/postbuild.mjs",
     "preview": "vite preview",
     "lint": "eslint .",
     "gen:og": "node scripts/gen-og-image.mjs"
